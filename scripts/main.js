@@ -172,25 +172,17 @@ function inititalizeFBO() {
   if (global.enableGrid && !(shaders.gridShader === null))
     geometry.drawGrid();
 
-
-
-  //if (global.mouse.button[0] || global.mouse.button[2])
   if (camera.isMoving && (!shaders.objectShader === null))
     drawCameraFocus(gl, shaders.objectShader, global.projMatrix, global.viewMatrix, camera);
 
-
-
   shader = shaders.gridShader;
-  if (global.enableBBox && geometry.octree && !(shader === null)) { 
+  if (global.enableBBox && !(shader === null)) { 
     gl.useProgram(shader);
     gl.enableVertexAttribArray(shader.vertexPositionAttribute);
 
     gl.uniform3f(shader.colorUniform, 0.7, 0.7, 0.0);
     gl.uniformMatrix4fv(shader.projMatrixUniform, false, global.projMatrix);
     gl.uniformMatrix4fv(shader.viewMatrixUniform, false, global.viewMatrix);
-
-    octree.drawBBoxes(geometry.octree, shader);
-
   }
 
 
@@ -205,47 +197,7 @@ function updateFBO() {
   gl.enable(gl.DEPTH_TEST);
   gl.depthFunc(gl.LEQUAL);
 
-
-  var shader = shaders.pointsShader;
-  if (geometry.octree && shader) {
-    // draw the points
-    gl.useProgram(shader);
-
-    gl.uniform1f(shader.pointSizeUniform, global.pointSize);
-    gl.uniformMatrix4fv(shader.projMatrixUniform, false, global.projMatrix);
-    gl.uniformMatrix4fv(shader.viewMatrixUniform, false, global.viewMatrix);
-
-
-    var viewportHeight = canvas.height / (2.0 * Math.tan(0.5*Math.PI / 180 * global.camera.fovy));
-    viewportHeight = 1.15 * 1024.0;
-    gl.uniform1f(shader.viewportHeightUniform, viewportHeight);
-
-
-    global.pointsDrawn = 0;
-
-
-    for (var i = 0; i < global.visibleList.length && global.pointsDrawn < global.maxPointsRendered; ++i) {
-      var node = global.visibleList[i];
-
-      if (node.loaded === true) {
-        octree.drawNode(node, shader);
-        global.visibleList.splice(i, 1);
-      } else {
-
-        if (node.loaded === false && node.depth <= global.maxRecursion) {
-          octree.load(node);
-
-        }
-
-      }
-    }
-
-
-  }
-
-
   disableFBO(global.renderTarget);
-
 }
 
 
