@@ -151,15 +151,13 @@
 	<link rel='stylesheet' href='styles/nprogress.css'/>
 
 </head>
-	<body onload="main('data/taliesin/taliesin.json', '')" >
-	<canvas id="canvas" width="800" height="600"></canvas>
+	<body onload="main()" >
+	<canvas id="canvas"></canvas>
 
 	<div class="buttonBar">
 		<button type="button" class="btn" onclick="toggleGrid()">Toggle Grid</button>
-		<!--
-		<button type="button" class="btn" onclick="toggleBBox()">Toggle BBox</button> -->
 		<button type="button" class="btn" onclick="resetCamera()">Reset Camera</button>
-		<!--<button type="button" class="btn" onclick="toggleFXAA()">Toggle Anti-aliasing</button> -->
+		<button type="button" class="btn" onclick="toggleFXAA()">Toggle Anti-aliasing</button>
 		<button type="button" class="btn" onclick="location.href='#openHelp';">Help</button>
 	</div>
 

@@ -591,7 +591,7 @@ function init(datapath, shaderpath) {
   global.stats.domElement.style.position = 'absolute';
   global.stats.domElement.style.right = '5px';
   global.stats.domElement.style.bottom = '5px';
-  //document.body.appendChild(global.stats.domElement);
+  document.body.appendChild(global.stats.domElement);
 
   bspTree.createTest();
 
@@ -610,7 +610,6 @@ function init(datapath, shaderpath) {
     global.maxConcurrentLoads = 8;
     global.downSampleWhileRotating = false;
   }
-
   
 
   // create trickle progress bar
@@ -636,7 +635,9 @@ function getBasePath(address) {
 }
 
 
-function main(datapath, shaderpath) {
+function main(opt_datapath, opt_shaderpath) {
+  const datapath = opt_datapath || '';
+  const shaderpath = opt_shaderpath || '';
   init(datapath, shaderpath);
 
   loop();
